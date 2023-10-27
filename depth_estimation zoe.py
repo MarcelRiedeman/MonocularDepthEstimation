@@ -29,6 +29,7 @@ while cap.isOpened():
 
         # Assuming 'metric_depth' key contains the depth tensor
         depth_prediction = prediction['metric_depth']
+        print(depth_prediction.shape, depth_prediction.mean(), depth_prediction.min())
 
         # Specify the output size as a tuple (depth_height, depth_width)
         output_size = (depth_prediction.shape[2], depth_prediction.shape[3])
@@ -44,7 +45,7 @@ while cap.isOpened():
         # Resize the interpolated depth map to match the input image dimensions
         resized_depth = interpolated_depth.cpu().numpy()
 
-    #output_norm = cv2.normalize(resized_depth, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+    output_norm = cv2.normalize(resized_depth, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     output_norm = cv2.flip(output_norm, 1)
     frame = cv2.flip(frame, 1)
 
